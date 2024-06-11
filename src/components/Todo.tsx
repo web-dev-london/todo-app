@@ -5,7 +5,9 @@ import { initialTodos } from '../service/data'
 import { Todo as Task, } from '../service/types'
 import TaskList from './TaskList'
 
-let nextId = 3;
+
+let nextId = 4;
+
 const Todo = () => {
     const [title, setTitle] = useState('');
     const [todos, setTodos] = useState<Task[]>(initialTodos);
@@ -44,30 +46,50 @@ const Todo = () => {
         }))
     }
 
+    const updateCheckStatus = (index: number) => {
+        setTodos(
+            todos.map((todo, currentIndex) =>
+                index === currentIndex
+                    ? { ...todo, done: !todo.done }
+                    : todo)
+        )
+
+        // setTodos([
+        //     ...todos.slice(0, index),
+        //     { ...todos[index], done: !todos[index].done },
+        //     ...todos.slice(index + 1)
+        // ])
+    }
+
+
     return (
-        <Container
-            maxW={'2xl'}
-            p={4}
-            className={'container'}
-        >
-            <Heading
-                fontSize={'26px'}
-                mb={5}
-                textAlign={'center'}
+        <>
+            <Container
+                maxW={'2xl'}
+                p={4}
+                className={'container'}
             >
-                Todo App
-            </Heading>
-            <AddTodo
-                title={title}
-                setTitle={handleInput}
-                handleFormSubmit={handleFormSubmit}
-            />
-            <TaskList
-                todos={todos}
-                onDeleteTodos={handleDeleteTodo}
-                onChangeTodos={handleChangeTodo}
-            />
-        </Container>
+                <Heading
+                    fontSize={'26px'}
+                    mb={5}
+                    textAlign={'center'}
+                >
+                    Todo App
+                </Heading>
+                <AddTodo
+                    title={title}
+                    setTitle={handleInput}
+                    handleFormSubmit={handleFormSubmit}
+                />
+                <TaskList
+                    todos={todos}
+                    onDeleteTodos={handleDeleteTodo}
+                    onChangeTodos={handleChangeTodo}
+                    checkStatus={updateCheckStatus}
+                />
+            </Container>
+            <pre>{JSON.stringify(todos, null, 2)}</pre>
+        </>
     )
 }
 

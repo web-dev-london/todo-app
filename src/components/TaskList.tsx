@@ -3,22 +3,24 @@ import { Todo } from '../service/types'
 import Task from './Task'
 
 interface Props {
-    todos: Todo[]
-    onDeleteTodos: (arg: number) => void
+    todos: Todo[];
+    onDeleteTodos: (todoId: number) => void;
     onChangeTodos: (nextTodos: Todo) => void;
+    checkStatus: (todos: number) => void;
 }
 
-const TaskList = ({ todos, onDeleteTodos, onChangeTodos }: Props) => {
+const TaskList = ({ todos, onDeleteTodos, onChangeTodos, checkStatus }: Props) => {
 
-    const listOfTasks = todos.map((todo) => {
+    const listOfTasks = todos.map((todos, index) => {
         return (
             <ListItem
-                key={todo.id}
+                key={todos.id}
             >
                 <Task
-                    todos={todo}
+                    todos={todos}
                     onChange={onChangeTodos}
                     onDelete={onDeleteTodos}
+                    updateStatus={() => checkStatus(index)}
                 />
             </ListItem>
         )

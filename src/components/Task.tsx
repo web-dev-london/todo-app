@@ -5,10 +5,11 @@ import { Todo } from "../service/types"
 interface Props {
     todos: Todo
     onDelete: (todoId: number) => void
-    onChange: (arg: Todo) => void
+    onChange: (nextTodos: Todo) => void
+    updateStatus: (index: Todo) => void
 }
 
-const Task = ({ todos, onDelete, onChange }: Props) => {
+const Task = ({ todos, onDelete, onChange, updateStatus }: Props) => {
     const [isEditing, setIsEditing] = useState(false);
 
     let todoContent;
@@ -33,6 +34,11 @@ const Task = ({ todos, onDelete, onChange }: Props) => {
                 </Button>
             </>
         )
+
+        if (todos.done) {
+            setIsEditing(false)
+        }
+
     } else {
         todoContent = (
             <>
@@ -40,12 +46,14 @@ const Task = ({ todos, onDelete, onChange }: Props) => {
                 <Button
                     onClick={() => setIsEditing(true)}
                     colorScheme="cyan"
+                    isDisabled={todos.done}
                 >
                     Edit
                 </Button>
             </>
         )
     }
+
 
     return (
         <>
@@ -54,6 +62,13 @@ const Task = ({ todos, onDelete, onChange }: Props) => {
             >
                 <Checkbox
                     defaultChecked={todos.done}
+                    onChange={(e) => {
+                        console.log('Checkbox ', todos.done);
+                        updateStatus({
+                            ...todos, done: e.target.defaultChecked
+                        })
+
+                    }}
                 />
                 {todoContent}
                 <Button
