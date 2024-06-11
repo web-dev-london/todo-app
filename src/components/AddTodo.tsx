@@ -1,36 +1,36 @@
 import { Box, Button, Input } from "@chakra-ui/react";
-import { ChangeEvent } from "react";
+import { ChangeEvent, FormEvent } from "react";
 
 interface Props {
     title: string;
     setTitle: (e: ChangeEvent<HTMLInputElement>) => void;
-    onAddTodos: (agr: string) => void;
-    reset: () => void;
+    handleFormSubmit: (e: FormEvent<HTMLFormElement>) => void;
 }
 
-const AddTodo = ({ title, setTitle, onAddTodos, reset }: Props) => {
+const AddTodo = ({ title, setTitle, handleFormSubmit }: Props) => {
     return (
         <>
-            <Box
-                display={'flex'}
-                justifyContent={'flex-start'}
+            <form
+                onSubmit={handleFormSubmit}
             >
-                <Input
-                    placeholder="Add todo..."
-                    value={title}
-                    onChange={setTitle}
-                    maxW={'md'}
-                />
-                <Button
-                    onClick={() => {
-                        onAddTodos(title)
-                        reset()
-                    }}
-                    colorScheme="blue"
+                <Box
+                    display={'flex'}
+                    justifyContent={'flex-start'}
                 >
-                    Add
-                </Button>
-            </Box>
+                    <Input
+                        placeholder="Add todo..."
+                        value={title}
+                        onChange={setTitle}
+                        maxW={'md'}
+                    />
+                    <Button
+                        type={'submit'}
+                        colorScheme="blue"
+                    >
+                        Add
+                    </Button>
+                </Box>
+            </form>
         </>
     )
 }

@@ -1,0 +1,5 @@
+.container {
+    border-radius: 5px;
+    border: 1px solid rgb(180, 177, 177);
+    margin-block: 1.5rem;
+}

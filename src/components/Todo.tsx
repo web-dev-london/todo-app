@@ -1,6 +1,6 @@
-import { Container } from '@chakra-ui/react'
+import { Container, Heading } from '@chakra-ui/react'
 import AddTodo from './AddTodo'
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, FormEvent, useState } from 'react'
 import { initialTodos } from '../service/data'
 import { Todo as Task, } from '../service/types'
 import TaskList from './TaskList'
@@ -9,6 +9,12 @@ let nextId = 3;
 const Todo = () => {
     const [title, setTitle] = useState('');
     const [todos, setTodos] = useState<Task[]>(initialTodos);
+
+    function handleFormSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
+        handleAddTodo(title);
+        handleReset();
+    }
 
     const handleInput = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value)
@@ -40,14 +46,21 @@ const Todo = () => {
 
     return (
         <Container
-            maxW={'5xl'}
-            p={2}
+            maxW={'2xl'}
+            p={4}
+            className={'container'}
         >
+            <Heading
+                fontSize={'26px'}
+                mb={5}
+                textAlign={'center'}
+            >
+                Todo App
+            </Heading>
             <AddTodo
                 title={title}
                 setTitle={handleInput}
-                onAddTodos={handleAddTodo}
-                reset={handleReset}
+                handleFormSubmit={handleFormSubmit}
             />
             <TaskList
                 todos={todos}
