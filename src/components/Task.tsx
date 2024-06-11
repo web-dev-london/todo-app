@@ -54,7 +54,6 @@ const Task = ({ todos, onDelete, onChange, updateStatus }: Props) => {
         )
     }
 
-
     return (
         <>
             <HStack

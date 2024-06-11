@@ -46,7 +46,7 @@ const Todo = () => {
         }))
     }
 
-    const updateCheckStatus = (index: number) => {
+    const handleCheckStatus = (index: number) => {
         setTodos(
             todos.map((todo, currentIndex) =>
                 index === currentIndex
@@ -85,7 +85,7 @@ const Todo = () => {
                     todos={todos}
                     onDeleteTodos={handleDeleteTodo}
                     onChangeTodos={handleChangeTodo}
-                    checkStatus={updateCheckStatus}
+                    checkStatus={handleCheckStatus}
                 />
             </Container>
             <pre>{JSON.stringify(todos, null, 2)}</pre>
